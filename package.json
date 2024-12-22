@@ -1,0 +1,36 @@
+{
+  "name": "abstract-language-support",
+  "displayName": "Abstract Language Support",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+
+    "languages": [{
+      "id": "abstract",
+      "aliases": ["Abstract", "abstract"],
+      "extensions": [".a"],
+      "configuration": "./language-configuration.json"
+    }],
+
+    "grammars": [{
+      "language": "abstract",
+      "scopeName": "source.abs",
+      "path": "./syntaxes/abstract.tmLanguage.json"
+    }],
+
+    "iconThemes": [
+      {
+        "id": "abstract",
+        "label": "Abstract",
+        "path": "./fileicons/abstract-icon-theme.json"
+      }
+    ]
+
+  }
+}
