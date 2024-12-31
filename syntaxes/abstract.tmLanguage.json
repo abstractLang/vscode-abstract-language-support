@@ -3,24 +3,50 @@
 	"name": "Abstract",
 
 	"patterns": [
-		{ "include": "#keywords" },
-		{ "include": "#attributes" },
-		{ "include": "#constants" },
-		{ "include": "#strings" },
-		{ "include": "#comments" }
+		{ "include": "#main" }
 	],
 
 	"repository": {
 
+		"main": {
+			"patterns": [
+				{ "include": "#comments" },
+				{ "include": "#code" }
+			]
+		},
+
+		"code": {
+			"patterns": [
+				{ "include": "#keywords" },
+				{ "include": "#attributes" },
+				{ "include": "#constants" },
+				{ "include": "#strings" },
+				{ "include": "#calls" },
+				{ "include": "#names" }
+			]
+		},
+
 		"keywords": {
 			"patterns": [
 				{
-					"name": "keyword.control.header.abstract",
+					"name": "keyword.control.abstract",
 					"match": "\\b(namespace|func|struct|packet|enum|let|const)\\b"
 				},
 				{
-					"name": "support.type.abstract",
-					"match": "\\b([ui](8|16|32|64|128|ptr)|f32|f64|float|double|string|void|type|anytype|noreturn)\\b"
+					"patterns": [
+						{
+							"name": "support.type.abstract",
+							"match": "\\b([ui](8|16|32|64|128|ptr)|byte)\\b"
+						},
+						{
+							"name": "support.type.abstract",
+							"match": "\\b(f32|f64|float|double)\\b"
+						},
+						{
+							"name": "support.type.abstract",
+							"match": "\\b(string|char|bool|void|type|anytype|noreturn)\\b"
+						}
+					]
 				},
 				{
 					"name": "keyword.operator.abstract",
@@ -63,7 +89,22 @@
 			"name": "string.quoted.double.abstract",
 			"begin": "\"",
 			"end": "\"",
+
 			"patterns": [
+				{
+					"name": "string.interpolated.abstract",
+					"begin": "\\\\\\{",
+					"end": "}",
+
+					"patterns": [
+						{
+							"name": "constant.language.interpolation.open.abstract",
+							"match": "\\\\\\{"
+						},
+
+						{ "include": "#code" }
+					]
+				},
 				{
 					"name": "constant.character.escape.abstract",
 					"match": "\\\\."
@@ -84,8 +125,19 @@
 					"end": "\n"
 				}
 			]
+		},
+
+		"calls": {
+			"name": "entity.name.function.abstract",
+			"match": "[a-zA-Z][a-zA-Z0-9]+(?=\\()"
+		},
+
+		"names": {
+			"name": "variable.other.abstract",
+            "match": "\\w+"
 		}
 
 	},
+
 	"scopeName": "source.abs"
 }
