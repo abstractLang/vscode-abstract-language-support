@@ -1,36 +1,42 @@
 {
   "name": "abstract-language-support",
-  "displayName": "Abstract Language Support",
+  "icon": "./assets/logo-stroke.png",
+  "displayName": "Abstract Language",
   "description": "",
+  "publisher": "abstractLang",
   "version": "0.0.1",
+  
   "engines": {
-    "vscode": "^1.90.0"
+    "vscode": "^1.96.0"
   },
   "categories": [
     "Programming Languages"
   ],
+  
   "contributes": {
 
     "languages": [{
       "id": "abstract",
       "aliases": ["Abstract", "abstract"],
       "extensions": [".a"],
-      "configuration": "./language-configuration.json"
+      "configuration": "./language-configuration.json",
+
+      "icon": {
+        "light": "./assets/abs-icon-black.svg",
+        "dark": "./assets/abs-icon-white.svg"
+      }
     }],
 
     "grammars": [{
       "language": "abstract",
       "scopeName": "source.abs",
       "path": "./syntaxes/abstract.tmLanguage.json"
-    }],
+    }]
 
-    "iconThemes": [
-      {
-        "id": "abstract",
-        "label": "Abstract",
-        "path": "./fileicons/abstract-icon-theme.json"
-      }
-    ]
+  },
 
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abstractLang/vscode-abstract-language-support"
   }
 }

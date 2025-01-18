@@ -30,7 +30,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.abstract",
-					"match": "\\b(namespace|func|struct|packet|enum|let|const)\\b"
+					"match": "\\b(namespace|func|struct|packed|enum|let|const|comptime|inline)\\b"
 				},
 				{
 					"patterns": [
@@ -50,7 +50,7 @@
 				},
 				{
 					"name": "keyword.operator.abstract",
-					"match": "\\b(\\+|-|\\*|\\/|%|==|!=|>=|<=|=|\\+=|-=|\\*=|\\/=|%=)\\b"
+					"match": "(\\+|-|\\*|\\/|%|==|!=|>=|<=|=|\\+=|-=|\\*=|\\/=|%=|and|or)"
 				}
 			]
 		},
