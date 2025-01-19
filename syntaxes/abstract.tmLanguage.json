@@ -33,6 +33,14 @@
 					"match": "\\b(namespace|func|struct|packed|enum|let|const|comptime|inline)\\b"
 				},
 				{
+					"name": "keyword.control.process.abstract",
+					"match": "\\b(if|elif|else|while|for|break|return)\\b"
+				},
+				{
+					"name": "keyword.control.trycatch.abstract",
+					"match": "\\b(try|catch)\\b"
+				},
+				{
 					"patterns": [
 						{
 							"name": "support.type.abstract",
