@@ -12,6 +12,8 @@
   "categories": [
     "Programming Languages"
   ],
+
+  "main": "./src/extension.js",
   
   "contributes": {
 
@@ -27,12 +29,24 @@
       }
     }],
 
-    "grammars": [{
+    "grammars-deprecated": [{
       "language": "abstract",
       "scopeName": "source.abs",
       "path": "./syntaxes/abstract.tmLanguage.json"
-    }]
+    }],
 
+    "semanticTokenScopes": [
+        {
+          "scopes": {
+            "keyword": ["keyword.control.abstract"],
+            "constant": ["constant.language.abstract"],
+            "string": ["string.quoted.double.abstract"],
+            
+            "comment-line": ["comment.line.abstract"],
+            "comment-block": ["comment.block.abstract"]
+          }
+        }
+    ]
   },
 
   "repository": {
