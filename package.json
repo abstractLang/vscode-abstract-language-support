@@ -12,6 +12,8 @@
   "categories": [
     "Programming Languages"
   ],
+
+  "main": "./src/extension.js",
   
   "contributes": {
 
@@ -31,8 +33,18 @@
       "language": "abstract",
       "scopeName": "source.abs",
       "path": "./syntaxes/abstract.tmLanguage.json"
-    }]
+    }],
 
+    "semanticTokenScopes": [
+        {
+          "scopes": {
+            "keyword": ["keyword.control.abstract"],
+            "type": ["support.type.abstract"],
+            "function": ["entity.name.function.abstract"],
+            "param": ["variable.parameter.abstract"]
+          }
+        }
+    ]
   },
 
   "repository": {
