@@ -33,6 +33,10 @@
 					"match": "\\b(namespace|func|struct|packed|enum|let|const|comptime|inline)\\b"
 				},
 				{
+					"name": "keyword.control.abstract",
+					"match": "\\b(import|from|extends|implements|constructor|destructor)\\b"
+				},
+				{
 					"name": "keyword.control.process.abstract",
 					"match": "\\b(if|elif|else|while|for|break|return)\\b"
 				},

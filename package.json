@@ -29,7 +29,7 @@
       }
     }],
 
-    "grammars-deprecated": [{
+    "grammars": [{
       "language": "abstract",
       "scopeName": "source.abs",
       "path": "./syntaxes/abstract.tmLanguage.json"
@@ -39,11 +39,9 @@
         {
           "scopes": {
             "keyword": ["keyword.control.abstract"],
-            "constant": ["constant.language.abstract"],
-            "string": ["string.quoted.double.abstract"],
-            
-            "comment-line": ["comment.line.abstract"],
-            "comment-block": ["comment.block.abstract"]
+            "type": ["support.type.abstract"],
+            "function": ["entity.name.function.abstract"],
+            "param": ["variable.parameter.abstract"]
           }
         }
     ]
