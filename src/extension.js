@@ -1,12 +1,26 @@
 const vscode = require('vscode');
-const { AbstractTokenProvider, legend } = require('./tokensProvider');
+const { TokenProvider, legend } = require('./tokensProvider');
+const { FoldingProvider } = require("./foldingProvider");
+const { DecorationManager } = require("./decorationsProvider");
 
 function activate(context) {
     const selector = { language: 'abstract', scheme: 'file' };
-    const provider = new AbstractTokenProvider();
+
+    const tokenProvider = new TokenProvider();
+    const foldingProvider = new FoldingProvider();
+    const decorationManager = new DecorationManager();
 
     context.subscriptions.push(
-        vscode.languages.registerDocumentSemanticTokensProvider(selector, provider, legend));
+        vscode.languages.registerDocumentSemanticTokensProvider(selector, tokenProvider, legend));
+
+    context.subscriptions.push(
+        vscode.languages.registerFoldingRangeProvider(selector, foldingProvider));
+    
+    context.subscriptions.push(
+        vscode.window.onDidChangeTextEditorVisibleRanges(() => {
+            decorationManager.applyDecorations();
+        })
+    );
 }
 
 function deactivate() {

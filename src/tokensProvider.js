@@ -1,14 +1,13 @@
 const vscode = require('vscode');
 const SemanticTokensBuilder = vscode.SemanticTokensBuilder;
 const Range = vscode.Range;
-const Position = vscode.Position;
 
 const legend = new vscode.SemanticTokensLegend(
-    ['keyword', 'type', 'param', 'function'],
+    ['keyword', 'type', 'struct', 'param', 'function'],
     ['readonly']
 );
 
-class AbstractTokenProvider {
+class TokenProvider {
 
     output = undefined;
 
@@ -105,6 +104,7 @@ class AbstractTokenProvider {
                     for (; i < src.length && src[i] != '\n'; i++);
                     --i;
                 }
+                continue;
             }
 
             else if (src[i] == '\n') { // count line breaks
@@ -140,6 +140,8 @@ class AbstractTokenProvider {
             else if (src[i] == ',') tokens.push({
                 type: 'comma', value: ',', startLine: line, startCol: i, endLine: line, endCol: i+1,
             });
+
+            else if (src[i] == '\n') continue;
 
             else if (IsValidIdentifierInitialiser(src[i])) { // parse identifiers
 
@@ -180,86 +182,106 @@ class AbstractTokenProvider {
         this.output.appendLine("parsing... ");
 
         while (tokens.length > 0) {
-            let curr = tokens.shift();
+            try {
 
-            if (curr.type == 'constKeyword' || curr.type == 'letKeyword') {
-                let type = this.parseExpression(tokens);
+                let curr = tokens.shift();
 
-                let starttkn = type[0];
-                let endtkn = type[type.length -1];
+                if (curr.type == 'constKeyword' || curr.type == 'letKeyword') {
+                    let type = this.parseExpression(tokens);
 
-                parsed.push({
-                    type: 'type',
-                    lineStart: starttkn.startLine,
-                    lineEnd: endtkn.endLine,
-                    colStart: starttkn.startCol,
-                    colEnd: endtkn.endCol
-                });
+                    let starttkn = type[0];
+                    let endtkn = type[type.length -1];
 
-            }
-
-            if (curr.type == 'funcKeyword') {
-                let type = this.parseExpression(tokens);
-
-                let starttkn = type[0];
-                let endtkn = type[type.length -1];
-
-                parsed.push({
-                    type: 'type',
-                    lineStart: starttkn.startLine,
-                    lineEnd: endtkn.endLine,
-                    colStart: starttkn.startCol,
-                    colEnd: endtkn.endCol
-                });
-
-                console.log(1, tokens[0].type, tokens[0].value);
-                if (tokens[0].type != 'identifier') continue;
-
-                let name = tokens.shift();
-
-                parsed.push({
-                    type: 'function',
-                    lineStart: name.startLine,
-                    lineEnd: name.endLine,
-                    colStart: name.startCol,
-                    colEnd: name.endCol
-                });
-
-                console.log(2, tokens[0].type, tokens[0].value);
-                if (tokens[0].type != 'leftParenthesis') continue;
-                tokens.shift();
-                
-                console.log("Parsing parameters...");
-                while (true) {
-                    let ptype = this.parseExpression(tokens);
-                    let pname = tokens.shift();
-
-                    for (let i of ptype) this.output.appendLine(i.type);
-
-                    let pstarttkn = ptype[0];
-                    let pendtkn = ptype[type.length -1];
-                    
                     parsed.push({
                         type: 'type',
-                        lineStart: pstarttkn.startLine,
-                        lineEnd: pendtkn.endLine,
-                        colStart: pstarttkn.startCol,
-                        colEnd: pendtkn.endCol
+                        lineStart: starttkn.startLine,
+                        lineEnd: endtkn.endLine,
+                        colStart: starttkn.startCol,
+                        colEnd: endtkn.endCol
                     });
 
-                    parsed.push({
-                        type: 'param',
-                        lineStart: pname.startLine,
-                        lineEnd: pname.endLine,
-                        colStart: pname.startCol,
-                        colEnd: pname.endCol
-                    });
-
-                    if (tokens[0].type == 'comma') tokens.shift();
-                    else break;
                 }
 
-            }
+                else if (curr.type == 'funcKeyword') {
+                    let type = this.parseExpression(tokens);
+                    
+                    let starttkn = type[0];
+                    let endtkn = type[type.length -1];
+                    console.log(starttkn);
+
+                    parsed.push({
+                        type: 'type',
+                        lineStart: starttkn.startLine,
+                        lineEnd: endtkn.endLine,
+                        colStart: starttkn.startCol,
+                        colEnd: endtkn.endCol
+                    });
+
+                    console.log(1, tokens[0].type, tokens[0].value);
+                    if (tokens[0].type != 'identifier') continue;
+
+                    let name = tokens.shift();
+
+                    parsed.push({
+                        type: 'function',
+                        lineStart: name.startLine,
+                        lineEnd: name.endLine,
+                        colStart: name.startCol,
+                        colEnd: name.endCol
+                    });
+
+                    console.log(2, tokens[0].type, tokens[0].value);
+                    if (tokens[0].type != 'leftParenthesis') continue;
+                    tokens.shift();
+                    
+                    console.log("Parsing parameters...");
+                    while (true) {
+                        let ptype = this.parseExpression(tokens);
+                        let pname = tokens.shift();
+
+                        for (let i of ptype) this.output.appendLine(`${i.type} ${i.value}`);
+
+                        let pstarttkn = ptype[0];
+                        let pendtkn = ptype[type.length -1];
+                        
+                        parsed.push({
+                            type: 'type',
+                            lineStart: pstarttkn.startLine,
+                            lineEnd: pendtkn.endLine,
+                            colStart: pstarttkn.startCol,
+                            colEnd: pendtkn.endCol
+                        });
+
+                        parsed.push({
+                            type: 'param',
+                            lineStart: pname.startLine,
+                            lineEnd: pname.endLine,
+                            colStart: pname.startCol,
+                            colEnd: pname.endCol
+                        });
+
+                        if (tokens[0].type == 'comma') tokens.shift();
+                        else break;
+                    }
+
+                }
+
+                else if (curr.type == 'structKeyword') {
+                    
+                    if (tokens[0].type != 'identifier') continue;
+                    let name = tokens.shift();
+
+                    parsed.push({
+                        type: 'struct',
+                        lineStart: name.startLine,
+                        lineEnd: name.endLine,
+                        colStart: name.startCol,
+                        colEnd: name.endCol
+                    });
+
+                }
+
+            } catch(err) { console.error(err); }
         }
 
         this.output.appendLine("parse finished");
@@ -281,7 +303,6 @@ class AbstractTokenProvider {
             }
         }
     }
-
 
     parseExpression(tokens) {
         let exptks = [];
@@ -327,4 +348,4 @@ function IsValidIdentifier(char)
     return /[A-Za-z0-9_]/.test(char);
 }
 
-module.exports = { AbstractTokenProvider, legend };
+module.exports = { TokenProvider, legend };

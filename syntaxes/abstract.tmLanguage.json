@@ -30,7 +30,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.abstract",
-					"match": "\\b(namespace|func|struct|packed|enum|let|const|comptime|inline)\\b"
+					"match": "\\b(namespace|func|struct|enum|let|const|comptime|inline)\\b"
 				},
 				{
 					"name": "keyword.control.abstract",
@@ -48,7 +48,7 @@
 					"patterns": [
 						{
 							"name": "support.type.abstract",
-							"match": "\\b([ui](8|16|32|64|128|ptr)|byte)\\b"
+							"match": "\\b([ui]([1-9]|[1-9][0-9]|1[0-9]{2}|2[0-5][0-9]|256|ptr)|byte)\\b"
 						},
 						{
 							"name": "support.type.abstract",

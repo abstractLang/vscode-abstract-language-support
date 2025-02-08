@@ -27,6 +27,7 @@
         "light": "./assets/abs-icon-black.svg",
         "dark": "./assets/abs-icon-white.svg"
       }
+
     }],
 
     "grammars": [{
@@ -40,11 +41,13 @@
           "scopes": {
             "keyword": ["keyword.control.abstract"],
             "type": ["support.type.abstract"],
+            "struct": ["entity.name.class.abstract"],
             "function": ["entity.name.function.abstract"],
             "param": ["variable.parameter.abstract"]
           }
         }
     ]
+
   },
 
   "repository": {
