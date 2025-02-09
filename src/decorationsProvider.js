@@ -12,10 +12,14 @@ class DecorationManager {
         });
     }
 
-    applyDecorations() {
-        const editor = vscode.window.activeTextEditor;
-        if (!editor) return;
+    updateDecorations(editor) {
+        if (editor.document.languageId === 'abstract')
+            this.applyDecorations(editor);
+        else
+            this.clearDecorations(editor);
+    }
 
+    applyDecorations(editor) {
         const decorations = [];
         const visibleRanges = editor.visibleRanges;
 
@@ -29,6 +33,9 @@ class DecorationManager {
         }
 
         editor.setDecorations(this.decorationType, decorations);
+    }
+    clearDecorations(editor) {
+        editor.setDecorations(this.decorationType, []);
     }
 
     isLineCollapsed(lineNumber, visibleRanges) {
