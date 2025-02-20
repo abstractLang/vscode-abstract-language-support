@@ -32,6 +32,6 @@ jobs:
           tag_name: latest
           draft: false
           prerelease: false
-          files: '*.vsce'
+          files: '*.vsix'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
