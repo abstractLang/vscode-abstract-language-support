@@ -46,7 +46,14 @@
             "param": ["variable.parameter.abstract"]
           }
         }
-    ]
+    ],
+
+    "configurationDefaults": {
+      "[abstract]" : {
+        "editor.insertSpaces": false,
+        "editor.tabSize": 4
+      }
+    }
 
   },
 

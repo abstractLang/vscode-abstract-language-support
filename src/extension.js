@@ -12,7 +12,6 @@ function activate(context) {
 
     const updateDecorations = () => {
         var editor = vscode.window.activeTextEditor;
-        console.log(editor.document.languageId);
 
         decorationManager.updateDecorations(editor);
     };
