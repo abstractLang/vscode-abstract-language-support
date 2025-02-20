@@ -2,7 +2,7 @@
   "name": "abstract-language-support",
   "icon": "./assets/logo-stroke.png",
   "displayName": "Abstract Language",
-  "description": "",
+  "description": "Full language support for the Abstract Programming Language",
   "publisher": "abstractLang",
   "version": "0.0.1",
   
