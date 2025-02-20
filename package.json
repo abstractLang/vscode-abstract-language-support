@@ -24,8 +24,8 @@
       "configuration": "./language-configuration.json",
 
       "icon": {
-        "light": "./assets/abs-icon-black.svg",
-        "dark": "./assets/abs-icon-white.svg"
+        "light": "./assets/file-icon-black.svg",
+        "dark": "./assets/file-icon-white.svg"
       }
 
     }],
