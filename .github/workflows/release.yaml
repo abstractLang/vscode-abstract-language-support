@@ -31,9 +31,19 @@ jobs:
 
       - run: echo "VSIX_NAME=$(ls *.vsix)" >> $GITHUB_ENV
 
+      - id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: latest
+          release_name: latest
+          draft: false
+          prerelease: false
+
       - uses: actions/upload-release-asset@v1.0.1
         with:
-          upload_url: https://github.com/abstractLang/vscode-abstract-language-support/releases/latest
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_name: "abstract-language-support.vsce"
           asset_content_type: extension/vsce
           asset_path: ${{ env.VSIX_NAME }}
