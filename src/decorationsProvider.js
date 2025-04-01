@@ -23,7 +23,7 @@ class DecorationManager {
             const lineText = editor.document.lineAt(i).text.trimEnd();
 
             if (lineText.endsWith('{') && this.isLineCollapsed(i, visibleRanges)) {
-                const range = new vscode.Range(i, lineText.length - 4, i, lineText.length);
+                const range = new vscode.Range(i, lineText.length, i, lineText.length + 4);
                 decorations.push(range);
             }
         }

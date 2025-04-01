@@ -11,8 +11,7 @@ class FoldingProvider {
             const line = document.lineAt(i).text.trim();
 
             if (line.endsWith('{')) {
-                if (line.trim() != '{') openingBrackets.push(i);
-                else openingBrackets.push(i-1);
+                openingBrackets.push(i);
             
             } else if (line === '}') {
                 if (openingBrackets.length > 0) {

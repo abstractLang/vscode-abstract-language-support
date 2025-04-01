@@ -17,10 +17,10 @@
 
 		"code": {
 			"patterns": [
+				{ "include": "#strings" },
 				{ "include": "#keywords" },
 				{ "include": "#attributes" },
 				{ "include": "#constants" },
-				{ "include": "#strings" },
 				{ "include": "#calls" },
 				{ "include": "#names" }
 			]
@@ -109,11 +109,6 @@
 					"end": "}",
 
 					"patterns": [
-						{
-							"name": "constant.language.interpolation.open.abstract",
-							"match": "\\\\\\{"
-						},
-
 						{ "include": "#code" }
 					]
 				},

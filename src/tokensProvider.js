@@ -107,6 +107,12 @@ class TokenProvider {
                 continue;
             }
 
+            if (src[i] == "\"") { // Strings are highlighted with textmate
+                // FIXME though still need some rework when interpolated
+                for (; i < src.length && src[i] != '\n'; i++);
+                --i;
+            }
+
             else if (src[i] == '\n') { // count line breaks
                 line++;
                 linebeggin = i+1;
