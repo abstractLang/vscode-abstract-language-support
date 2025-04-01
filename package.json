@@ -2,7 +2,7 @@
   "name": "abstract-language-support",
   "icon": "./assets/logo-stroke.png",
   "displayName": "Abstract Language",
-  "description": "",
+  "description": "Full language support for the Abstract Programming Language",
   "publisher": "abstractLang",
   "version": "0.0.1",
   
@@ -24,8 +24,8 @@
       "configuration": "./language-configuration.json",
 
       "icon": {
-        "light": "./assets/abs-icon-black.svg",
-        "dark": "./assets/abs-icon-white.svg"
+        "light": "./assets/file-icon-black.svg",
+        "dark": "./assets/file-icon-white.svg"
       }
 
     }],
@@ -46,7 +46,14 @@
             "param": ["variable.parameter.abstract"]
           }
         }
-    ]
+    ],
+
+    "configurationDefaults": {
+      "[abstract]" : {
+        "editor.insertSpaces": false,
+        "editor.tabSize": 4
+      }
+    }
 
   },
 

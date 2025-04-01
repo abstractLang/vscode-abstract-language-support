@@ -213,7 +213,7 @@ class TokenProvider {
                     
                     let starttkn = type[0];
                     let endtkn = type[type.length -1];
-                    console.log(starttkn);
+                    //console.log(starttkn);
 
                     parsed.push({
                         type: 'type',
@@ -223,7 +223,7 @@ class TokenProvider {
                         colEnd: endtkn.endCol
                     });
 
-                    console.log(1, tokens[0].type, tokens[0].value);
+                    //console.log(1, tokens[0].type, tokens[0].value);
                     if (tokens[0].type != 'identifier') continue;
 
                     let name = tokens.shift();
@@ -236,11 +236,11 @@ class TokenProvider {
                         colEnd: name.endCol
                     });
 
-                    console.log(2, tokens[0].type, tokens[0].value);
+                    //console.log(2, tokens[0].type, tokens[0].value);
                     if (tokens[0].type != 'leftParenthesis') continue;
                     tokens.shift();
                     
-                    console.log("Parsing parameters...");
+                    //console.log("Parsing parameters...");
                     while (true) {
                         let ptype = this.parseExpression(tokens);
                         let pname = tokens.shift();
