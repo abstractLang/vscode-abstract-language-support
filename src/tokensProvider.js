@@ -35,7 +35,6 @@ class TokenProvider {
     }
 
     tokenMap = {
-        "namespace":  "namespaceKeyword",
         "import":     "importKeyword",
         "from":       "fromKeyword",
 
@@ -43,6 +42,7 @@ class TokenProvider {
         "const":      "constKeyword",
         "func":       "funcKeyword",
         "struct":     "structKeyword",
+        "typedef":    "typedefKeyword",
         "extends":    "extendsKeyword",
         "enum":       "enumKeyword",
         "switch":     "switchKeyword",
@@ -123,7 +123,7 @@ class TokenProvider {
                 type: 'leftParenthesis', value: '(', startLine: line, startCol: i, endLine: line, endCol: i+1,
             });
             else if (src[i] == ')') tokens.push({
-                type: 'rightParenthesis', value: '(', startLine: line, startCol: i, endLine: line, endCol: i+1,
+                type: 'rightParenthesis', value: ')', startLine: line, startCol: i, endLine: line, endCol: i+1,
             });
             
             else if (src[i] == '{') tokens.push({
@@ -209,23 +209,8 @@ class TokenProvider {
                 }
 
                 else if (curr.type == 'funcKeyword') {
-                    let type = this.parseExpression(tokens);
                     
-                    let starttkn = type[0];
-                    let endtkn = type[type.length -1];
-                    //console.log(starttkn);
-
-                    parsed.push({
-                        type: 'type',
-                        lineStart: starttkn.startLine,
-                        lineEnd: endtkn.endLine,
-                        colStart: starttkn.startCol,
-                        colEnd: endtkn.endCol
-                    });
-
-                    //console.log(1, tokens[0].type, tokens[0].value);
                     if (tokens[0].type != 'identifier') continue;
-
                     let name = tokens.shift();
 
                     parsed.push({
@@ -236,7 +221,6 @@ class TokenProvider {
                         colEnd: name.endCol
                     });
 
-                    //console.log(2, tokens[0].type, tokens[0].value);
                     if (tokens[0].type != 'leftParenthesis') continue;
                     tokens.shift();
                     
@@ -248,7 +232,7 @@ class TokenProvider {
                         for (let i of ptype) this.output.appendLine(`${i.type} ${i.value}`);
 
                         let pstarttkn = ptype[0];
-                        let pendtkn = ptype[type.length -1];
+                        let pendtkn = ptype[ptype.length -1];
                         
                         parsed.push({
                             type: 'type',
@@ -268,6 +252,23 @@ class TokenProvider {
 
                         if (tokens[0].type == 'comma') tokens.shift();
                         else break;
+                    }
+                    if (tokens[0].type != 'rightParenthesis') continue;
+                    tokens.shift();
+                    
+                    if (tokens[0].type != 'leftBrackets') {
+                        let type = this.parseExpression(tokens);
+                    
+                        let starttkn = type[0];
+                        let endtkn = type[type.length -1];
+
+                        parsed.push({
+                            type: 'type',
+                            lineStart: starttkn.startLine,
+                            lineEnd: endtkn.endLine,
+                            colStart: starttkn.startCol,
+                            colEnd: endtkn.endCol
+                        });
                     }
 
                 }

@@ -18,8 +18,8 @@
 		"code": {
 			"patterns": [
 				{ "include": "#strings" },
-				{ "include": "#keywords" },
 				{ "include": "#attributes" },
+				{ "include": "#keywords" },
 				{ "include": "#constants" },
 				{ "include": "#calls" },
 				{ "include": "#names" }
@@ -30,7 +30,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.abstract",
-					"match": "\\b(namespace|func|struct|enum|let|const|comptime|inline)\\b"
+					"match": "\\b(func|struct|typedef|let|const)\\b"
 				},
 				{
 					"name": "keyword.control.abstract",
@@ -45,14 +45,18 @@
 					"match": "\\b(try|catch)\\b"
 				},
 				{
+					"name": "keyword.control.orelse.abstract",
+					"match": "\\b(\\?\\?)\\b"
+				},
+				{
 					"patterns": [
 						{
 							"name": "support.type.abstract",
-							"match": "\\b([ui]([1-9]|[1-9][0-9]|1[0-9]{2}|2[0-5][0-9]|256|ptr)|byte)\\b"
+							"match": "\\b([ui]([1-9]|[1-9][0-9]|1[0-9]{2}|2[0-5][0-9]|256|ptr))\\b"
 						},
 						{
 							"name": "support.type.abstract",
-							"match": "\\b(f32|f64|float|double)\\b"
+							"match": "\\b(byte|f32|f64|float|double)\\b"
 						},
 						{
 							"name": "support.type.abstract",
@@ -125,6 +129,11 @@
 					"name": "comment.block.abstract",
 					"begin": "###",
 					"end": "###"
+				},
+				{
+					"name": "comment.documentation.abstract",
+					"begin": "#\\?",
+					"end": "\n"
 				},
 				{
 					"name": "comment.line.abstract",
